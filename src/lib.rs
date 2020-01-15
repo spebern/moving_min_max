@@ -25,7 +25,7 @@
 //! assert_eq!(moving_min.min(), Some(&1));
 //! assert_eq!(moving_min.pop(), Some(1));
 //!
-//! assert_eq!(moving_min.min(), Some(&1));
+//! assert_eq!(moving_min.min(), Some(&3));
 //! assert_eq!(moving_min.pop(), Some(3));
 //!
 //! assert_eq!(moving_min.min(), None);
@@ -48,7 +48,7 @@
 //! assert_eq!(moving_max.max(), Some(&3));
 //! assert_eq!(moving_max.pop(), Some(3));
 //!
-//! assert_eq!(moving_max.max(), Some(&3));
+//! assert_eq!(moving_max.max(), Some(&1));
 //! assert_eq!(moving_max.pop(), Some(1));
 //!
 //! assert_eq!(moving_max.max(), None);
@@ -108,11 +108,16 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
     /// Removes and returns the last value of the sliding window.
     pub fn pop(&mut self) -> Option<T> {
         if self.pop_stack.is_empty() {
-            let last = self.push_stack.last().cloned();
-            match last {
-                Some((_, min)) => {
+            match self.push_stack.pop() {
+                Some((val, _)) => {
+                    self.pop_stack.push((val.clone(), val));
                     while let Some((val, _)) = self.push_stack.pop() {
-                        self.pop_stack.push((val, min.clone()));
+                        let min = if self.pop_stack.last().unwrap().1 < val {
+                            self.pop_stack.last().unwrap().1.clone()
+                        } else {
+                            val.clone()
+                        };
+                        self.pop_stack.push((val.clone(), min));
                     }
                 }
                 None => return None,
@@ -178,11 +183,16 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
     /// Removes and returns the last value of the sliding window.
     pub fn pop(&mut self) -> Option<T> {
         if self.pop_stack.is_empty() {
-            let last = self.push_stack.last().cloned();
-            match last {
-                Some((_, max)) => {
+            match self.push_stack.pop() {
+                Some((val, _)) => {
+                    self.pop_stack.push((val.clone(), val));
                     while let Some((val, _)) = self.push_stack.pop() {
-                        self.pop_stack.push((val, max.clone()));
+                        let max = if self.pop_stack.last().unwrap().1 > val {
+                            self.pop_stack.last().unwrap().1.clone()
+                        } else {
+                            val.clone()
+                        };
+                        self.pop_stack.push((val.clone(), max));
                     }
                 }
                 None => return None,
@@ -211,9 +221,21 @@ mod tests {
         moving_min.push(3);
         assert_eq!(moving_min.min(), Some(&1));
         assert_eq!(moving_min.pop(), Some(1));
-        assert_eq!(moving_min.min(), Some(&1));
+        assert_eq!(moving_min.min(), Some(&2));
         assert_eq!(moving_min.pop(), Some(2));
         assert_eq!(moving_min.pop(), Some(3));
+        assert_eq!(moving_min.pop(), None);
+
+        moving_min.push(2);
+        moving_min.push(1);
+        moving_min.push(3);
+        assert_eq!(moving_min.min(), Some(&1));
+        assert_eq!(moving_min.pop(), Some(2));
+        assert_eq!(moving_min.min(), Some(&1));
+        assert_eq!(moving_min.pop(), Some(1));
+        assert_eq!(moving_min.min(), Some(&3));
+        assert_eq!(moving_min.pop(), Some(3));
+        assert_eq!(moving_min.min(), None);
         assert_eq!(moving_min.pop(), None);
     }
 
@@ -227,9 +249,21 @@ mod tests {
         moving_max.push(1);
         assert_eq!(moving_max.max(), Some(&3));
         assert_eq!(moving_max.pop(), Some(3));
-        assert_eq!(moving_max.max(), Some(&3));
+        assert_eq!(moving_max.max(), Some(&2));
         assert_eq!(moving_max.pop(), Some(2));
         assert_eq!(moving_max.pop(), Some(1));
+        assert_eq!(moving_max.pop(), None);
+
+        moving_max.push(2);
+        moving_max.push(3);
+        moving_max.push(1);
+        assert_eq!(moving_max.max(), Some(&3));
+        assert_eq!(moving_max.pop(), Some(2));
+        assert_eq!(moving_max.max(), Some(&3));
+        assert_eq!(moving_max.pop(), Some(3));
+        assert_eq!(moving_max.max(), Some(&1));
+        assert_eq!(moving_max.pop(), Some(1));
+        assert_eq!(moving_max.max(), None);
         assert_eq!(moving_max.pop(), None);
     }
 }

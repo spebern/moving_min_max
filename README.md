@@ -29,7 +29,7 @@ assert_eq!(moving_min.pop(), Some(2));
 assert_eq!(moving_min.min(), Some(&1));
 assert_eq!(moving_min.pop(), Some(1));
 
-assert_eq!(moving_min.min(), Some(&1));
+assert_eq!(moving_min.min(), Some(&3));
 assert_eq!(moving_min.pop(), Some(3));
 
 assert_eq!(moving_min.min(), None);
@@ -52,7 +52,7 @@ assert_eq!(moving_max.pop(), Some(2));
 assert_eq!(moving_max.max(), Some(&3));
 assert_eq!(moving_max.pop(), Some(3));
 
-assert_eq!(moving_max.max(), Some(&3));
+assert_eq!(moving_max.max(), Some(&1));
 assert_eq!(moving_max.pop(), Some(1));
 
 assert_eq!(moving_max.max(), None);
