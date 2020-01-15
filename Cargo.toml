@@ -1,0 +1,12 @@
+[package]
+name = "moving_min_max"
+version = "0.1.0"
+authors = ["spebern sp33cht@googlemail.com"]
+license = "MIT/Apache-2.0"
+keywords = ["moving", "sliding", "window", "min", "max"]
+readme = "README.md"
+repository = "https://github.com/spebern/moving_min_max"
+homepage = "https://github.com/spebern/moving_min_max"
+documentation = "https://docs.rs/moving_min_max"
+description = """Tracking minimum or maximum of sliding windows."""
+edition = "2018"
