@@ -112,7 +112,7 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
                 Some((val, _)) => {
                     self.pop_stack.push((val.clone(), val));
                     while let Some((val, _)) = self.push_stack.pop() {
-                        // This is save, because we just pushed one element onto
+                        // This is safe, because we just pushed one element onto
                         // pop_stack and therefore it cannot be empty.
                         let last =
                             unsafe { self.pop_stack.get_unchecked(self.pop_stack.len() - 1) };
@@ -191,7 +191,7 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
                 Some((val, _)) => {
                     self.pop_stack.push((val.clone(), val));
                     while let Some((val, _)) = self.push_stack.pop() {
-                        // This is save, because we just pushed one element onto
+                        // This is safe, because we just pushed one element onto
                         // pop_stack and therefore it cannot be empty.
                         let last =
                             unsafe { self.pop_stack.get_unchecked(self.pop_stack.len() - 1) };
