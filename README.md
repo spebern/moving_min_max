@@ -1,5 +1,18 @@
 # moving min max
 
+[![Crates.io][crates-badge]][crates-url]
+[![docs.rs docs][docs-badge]][docs-url]
+[![ci][ci-badge]][ci-url]
+
+[crates-badge]: https://img.shields.io/crates/v/moving_min_max.svg
+[crates-url]: https://crates.io/crates/moving_min_max
+
+[docs-badge]: https://img.shields.io/badge/docs-latest-blue.svg
+[docs-url]: https://docs.rs/moving_min_max
+
+[ci-badge]: https://github.com/spebern/moving_min_max/workflows/Rust/badge.svg
+[ci-url]: https://github.com/spebern/moving_min_max/actions
+
 <!-- cargo-sync-readme start -->
 
 Keep track of the minimum or maximum value in a sliding window.
