@@ -56,6 +56,7 @@
 //! ```
 
 /// `MovingMin` provides O(1) access to the minimum of a sliding window.
+#[derive(Debug)]
 pub struct MovingMin<T> {
     push_stack: Vec<(T, T)>,
     pop_stack: Vec<(T, T)>,
@@ -137,6 +138,7 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
 }
 
 /// `MovingMax` provides O(1) access to the maximum of a sliding window.
+#[derive(Debug)]
 pub struct MovingMax<T> {
     push_stack: Vec<(T, T)>,
     pop_stack: Vec<(T, T)>,
