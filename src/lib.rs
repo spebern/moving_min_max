@@ -65,6 +65,7 @@ pub struct MovingMin<T> {
 impl<T: Clone + PartialOrd> MovingMin<T> {
     /// Creates a new `MovingMin` to keep track of the minimum in a sliding
     /// window.
+    #[inline]
     pub fn new() -> Self {
         Self {
             push_stack: Vec::new(),
@@ -74,6 +75,7 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
 
     /// Creates a new `MovingMin` to keep track of the minimum in a sliding
     /// window with `capacity` allocated slots.
+    #[inline]
     pub fn with_capacity(capacity: usize) -> Self {
         Self {
             push_stack: Vec::with_capacity(capacity),
@@ -83,6 +85,7 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
 
     /// Returns the minimum of the sliding window or `None` if the window is
     /// empty.
+    #[inline]
     pub fn min(&self) -> Option<&T> {
         match (self.push_stack.last(), self.pop_stack.last()) {
             (None, None) => None,
@@ -93,6 +96,7 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
     }
 
     /// Pushes a new element into the sliding window.
+    #[inline]
     pub fn push(&mut self, val: T) {
         self.push_stack.push(match self.push_stack.last() {
             Some((_, min)) => {
@@ -107,6 +111,7 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
     }
 
     /// Removes and returns the last value of the sliding window.
+    #[inline]
     pub fn pop(&mut self) -> Option<T> {
         if self.pop_stack.is_empty() {
             match self.push_stack.pop() {
@@ -132,6 +137,7 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
     }
 
     /// Returns the number of elements stored in the sliding window.
+    #[inline]
     pub fn len(&self) -> usize {
         self.push_stack.len() + self.pop_stack.len()
     }
@@ -146,6 +152,7 @@ pub struct MovingMax<T> {
 
 impl<T: Clone + PartialOrd> MovingMax<T> {
     /// Creates a new `MovingMax` to keep track of the maximum in a sliding window.
+    #[inline]
     pub fn new() -> Self {
         Self {
             push_stack: Vec::new(),
@@ -155,6 +162,7 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
 
     /// Creates a new `MovingMax` to keep track of the maximum in a sliding window with
     /// `capacity` allocated slots.
+    #[inline]
     pub fn with_capacity(capacity: usize) -> Self {
         Self {
             push_stack: Vec::with_capacity(capacity),
@@ -163,6 +171,7 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
     }
 
     /// Returns the maximum of the sliding window or `None` if the window is empty.
+    #[inline]
     pub fn max(&self) -> Option<&T> {
         match (self.push_stack.last(), self.pop_stack.last()) {
             (None, None) => None,
@@ -173,6 +182,7 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
     }
 
     /// Pushes a new element into the sliding window.
+    #[inline]
     pub fn push(&mut self, val: T) {
         self.push_stack.push(match self.push_stack.last() {
             Some((_, max)) => {
@@ -187,6 +197,7 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
     }
 
     /// Removes and returns the last value of the sliding window.
+    #[inline]
     pub fn pop(&mut self) -> Option<T> {
         if self.pop_stack.is_empty() {
             match self.push_stack.pop() {
@@ -212,6 +223,7 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
     }
 
     /// Returns the number of elements stored in the sliding window.
+    #[inline]
     pub fn len(&self) -> usize {
         self.push_stack.len() + self.pop_stack.len()
     }
