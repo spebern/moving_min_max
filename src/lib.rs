@@ -62,15 +62,21 @@ pub struct MovingMin<T> {
     pop_stack: Vec<(T, T)>,
 }
 
+impl<T: Clone + PartialOrd> Default for MovingMin<T> {
+    fn default() -> Self {
+        Self {
+            push_stack: Vec::new(),
+            pop_stack: Vec::new(),
+        }
+    }
+}
+
 impl<T: Clone + PartialOrd> MovingMin<T> {
     /// Creates a new `MovingMin` to keep track of the minimum in a sliding
     /// window.
     #[inline]
     pub fn new() -> Self {
-        Self {
-            push_stack: Vec::new(),
-            pop_stack: Vec::new(),
-        }
+        Self::default()
     }
 
     /// Creates a new `MovingMin` to keep track of the minimum in a sliding
@@ -141,6 +147,12 @@ impl<T: Clone + PartialOrd> MovingMin<T> {
     pub fn len(&self) -> usize {
         self.push_stack.len() + self.pop_stack.len()
     }
+
+    /// Returns `true` if the moving window contains no elements.
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
 }
 
 /// `MovingMax` provides O(1) access to the maximum of a sliding window.
@@ -150,14 +162,20 @@ pub struct MovingMax<T> {
     pop_stack: Vec<(T, T)>,
 }
 
-impl<T: Clone + PartialOrd> MovingMax<T> {
-    /// Creates a new `MovingMax` to keep track of the maximum in a sliding window.
-    #[inline]
-    pub fn new() -> Self {
+impl<T: Clone + PartialOrd> Default for MovingMax<T> {
+    fn default() -> Self {
         Self {
             push_stack: Vec::new(),
             pop_stack: Vec::new(),
         }
+    }
+}
+
+impl<T: Clone + PartialOrd> MovingMax<T> {
+    /// Creates a new `MovingMax` to keep track of the maximum in a sliding window.
+    #[inline]
+    pub fn new() -> Self {
+        Self::default()
     }
 
     /// Creates a new `MovingMax` to keep track of the maximum in a sliding window with
@@ -226,6 +244,12 @@ impl<T: Clone + PartialOrd> MovingMax<T> {
     #[inline]
     pub fn len(&self) -> usize {
         self.push_stack.len() + self.pop_stack.len()
+    }
+
+    /// Returns `true` if the moving window contains no elements.
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
     }
 }
 
